@@ -3,18 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Remote Worker Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind Configuration -->
     <script>
@@ -44,7 +40,13 @@
     </script>
 
     <style>
-        /* Custom styles for specific visual elements that are tricky with purely utility classes */
+        /* Strict Mobile Viewport Overflow Protection */
+        html, body {
+            max-width: 100vw !important;
+            overflow-x: hidden !important;
+            position: relative;
+        }
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -58,50 +60,21 @@
             background-repeat: repeat-x;
         }
 
-        /* Hide scrollbar for clean horizontal scrolling if needed */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            /* IE and Edge */
-            scrollbar-width: none;
-            /* Firefox */
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Custom Floating Animations */
         @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-12px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
         }
 
-        .animate-float {
-            animation: float 4s ease-in-out infinite;
-        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-float-delayed { animation: float 4s ease-in-out infinite; animation-delay: 1.5s; }
+        .animate-float-slow { animation: float 5s ease-in-out infinite; animation-delay: 0.5s; }
 
-        .animate-float-delayed {
-            animation: float 4s ease-in-out infinite;
-            animation-delay: 1.5s;
-        }
-
-        .animate-float-slow {
-            animation: float 5s ease-in-out infinite;
-            animation-delay: 0.5s;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         /* Staggered 3D Letter Swap */
         .text-3d-wrapper {
@@ -127,9 +100,7 @@
             backface-visibility: hidden;
         }
 
-        .char-3d::before {
-            color: inherit;
-        }
+        .char-3d::before { color: inherit; }
 
         .char-3d::after {
             position: absolute;
@@ -138,10 +109,8 @@
             transform-origin: top;
             transform: rotateX(-90deg);
             color: #3730a3;
-            /* Darker shadow text */
         }
 
-        /* FLIP TRIGGER: Works on Hover OR when JS adds the class */
         .text-3d-wrapper:hover .char-3d,
         .text-3d-wrapper.is-flipped .char-3d {
             transform: translateY(-100%) rotateX(90deg);
@@ -154,7 +123,6 @@
             flex-direction: column;
             align-items: flex-start;
             pointer-events: none;
-            /* Animate top and left directly for correct container-relative movement */
             transition: top 2.5s cubic-bezier(0.25, 1, 0.5, 1), left 2.5s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: 50;
         }
@@ -176,41 +144,10 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             white-space: nowrap;
         }
-
-        /* Ambient Masked Text Gradient */
-.masked-heading {
-    background: linear-gradient(120deg, #0f172a 0%, #4f46e5 45%, #818cf8 55%, #0f172a 100%);
-    background-size: 200% auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: textShimmer 8s linear infinite;
-}
-
-@keyframes textShimmer {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
-}
-
-
-/* Bulletproof Shimmer Text Mask */
-.text-shimmer-mask {
-    background: linear-gradient(120deg, #1e1b4b 0%, #4f46e5 25%, #c7d2fe 50%, #4f46e5 75%, #1e1b4b 100%);
-    background-size: 200% auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: shimmerMove 5s linear infinite;
-}
-
-@keyframes shimmerMove {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
-}
     </style>
 </head>
 
-<body class="font-sans text-gray-900 bg-white antialiased overflow-x-hidden smooth-scroll">
+<body class="font-sans text-gray-900 bg-white antialiased overflow-x-hidden w-full relative">
 
     <nav class="w-full bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex items-center justify-between">
@@ -229,1162 +166,761 @@
             <!-- Desktop Links -->
             <div class="hidden md:flex items-center gap-8">
                 <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Overview</a>
-                <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Use
-                    Cases</a>
+                <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Use Cases</a>
                 <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
                 <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">About Us</a>
             </div>
 
             <!-- Auth Buttons -->
             <div class="hidden md:flex items-center gap-4">
-                <a href="./auth.html"
-                    class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Log In</a>
-                <a href="./auth.html"
-                    class="text-sm font-medium bg-indigo-600 text-white px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm">Sign
-                    Up</a>
+                <a href="./auth.html" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">Log In</a>
+                <a href="./auth.html" class="text-sm font-medium bg-indigo-600 text-white px-5 py-2.5 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm">Sign Up</a>
             </div>
 
             <!-- Mobile Menu Button -->
-            <button class="md:hidden text-gray-600">
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600 p-2 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
                     </path>
                 </svg>
             </button>
         </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-6 border-t border-gray-100 bg-white/95 backdrop-blur-md">
+            <div class="flex flex-col gap-4">
+                <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900">Overview</a>
+                <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900">Use Cases</a>
+                <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900">Pricing</a>
+                <a href="#" class="text-sm font-medium text-gray-600 hover:text-gray-900">About Us</a>
+                <div class="flex flex-col gap-2 pt-2 border-t border-gray-100">
+                    <a href="./auth.html" class="text-center text-sm font-medium text-gray-600 py-2.5 border border-gray-200 rounded-lg">Log In</a>
+                    <a href="./auth.html" class="text-center text-sm font-medium bg-indigo-600 text-white py-2.5 rounded-lg">Sign Up</a>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <!-- hero section  -->
-    <section class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+    <main class="w-full overflow-x-hidden">
 
-            <!-- Left Content -->
-            <div class="max-w-2xl">
-              <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-gray-900">
-    Present
-    <span id="remote-text-3d" class="text-indigo-600 relative inline-block text-3d-wrapper group">
-        <!-- Staggered 3D Letters -->
-        <span class="flex">
-            <span class="char-3d" style="--i: 0;" data-char="R"></span>
-            <span class="char-3d" style="--i: 1;" data-char="e"></span>
-            <span class="char-3d" style="--i: 2;" data-char="m"></span>
-            <span class="char-3d" style="--i: 3;" data-char="o"></span>
-            <span class="char-3d" style="--i: 4;" data-char="t"></span>
-            <span class="char-3d" style="--i: 5;" data-char="e"></span>
-            <span class="char-3d" style="--i: 6;" data-char=" "></span>
-            <span class="char-3d" style="--i: 7;" data-char="W"></span>
-            <span class="char-3d" style="--i: 8;" data-char="o"></span>
-            <span class="char-3d" style="--i: 9;" data-char="r"></span>
-            <span class="char-3d" style="--i: 10;" data-char="k"></span>
-            <span class="char-3d" style="--i: 11;" data-char="e"></span>
-            <span class="char-3d" style="--i: 12;" data-char="r"></span>
-            <span class="char-3d" style="--i: 13;" data-char="s"></span>
-        </span>
+        <!-- hero section -->
+        <section class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
-        <!-- SVG Underline -->
-        <svg class="absolute w-full h-3 -bottom-1 text-indigo-200 left-0 -z-10 transition-transform duration-500 origin-left group-hover:scale-x-105"
-            viewBox="0 0 100 10" preserveAspectRatio="none">
-            <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="none" />
-        </svg>
-    </span><br> 
+                <!-- Left Content -->
+                <div class="max-w-2xl">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-gray-900">
+                        Present
+                        <span id="remote-text-3d" class="text-indigo-600 relative inline-block text-3d-wrapper group">
+                            <!-- Staggered 3D Letters -->
+                            <span class="flex">
+                                <span class="char-3d" style="--i: 0;" data-char="R"></span>
+                                <span class="char-3d" style="--i: 1;" data-char="e"></span>
+                                <span class="char-3d" style="--i: 2;" data-char="m"></span>
+                                <span class="char-3d" style="--i: 3;" data-char="o"></span>
+                                <span class="char-3d" style="--i: 4;" data-char="t"></span>
+                                <span class="char-3d" style="--i: 5;" data-char="e"></span>
+                                <span class="char-3d" style="--i: 6;" data-char=" "></span>
+                                <span class="char-3d" style="--i: 7;" data-char="W"></span>
+                                <span class="char-3d" style="--i: 8;" data-char="o"></span>
+                                <span class="char-3d" style="--i: 9;" data-char="r"></span>
+                                <span class="char-3d" style="--i: 10;" data-char="k"></span>
+                                <span class="char-3d" style="--i: 11;" data-char="e"></span>
+                                <span class="char-3d" style="--i: 12;" data-char="r"></span>
+                                <span class="char-3d" style="--i: 13;" data-char="s"></span>
+                            </span>
 
-    <!-- VIDEO-MASKED HEADING (OPTION 2: SWIRLING INK) -->
-    <span class="relative inline-block overflow-hidden align-bottom">
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-            <source src="https://www.pexels.com/download/video/4162456/" type="video/mp4">
-        </video>
-        <span class="relative block text-black bg-white font-extrabold mix-blend-screen pointer-events-none">
-            as the Best Assistants for Your Work
-        </span>
-    </span>
-</h1>
-                <p class="mt-6 text-lg text-gray-500 leading-relaxed max-w-lg">
-                    The absolute best solution for those who want to establish a seamless collaboration with remote
-                    workers, efficiently and effectively.
-                </p>
+                            <!-- SVG Underline -->
+                            <svg class="absolute w-full h-3 -bottom-1 text-indigo-200 left-0 -z-10 transition-transform duration-500 origin-left group-hover:scale-x-105"
+                                viewBox="0 0 100 10" preserveAspectRatio="none">
+                                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="none" />
+                            </svg>
+                        </span><br> 
 
-                <div class="mt-8 flex flex-wrap items-center gap-4">
-                    <a href="#"
-                        class="bg-indigo-600 text-white px-7 py-3.5 rounded-xl font-medium hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 flex items-center gap-2">
-                        Get Started
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                    </a>
-                    <a href="#"
-                        class="text-gray-900 font-medium px-6 py-3.5 rounded-xl hover:bg-gray-50 transition-colors">
-                        See Pricing
-                    </a>
-                </div>
+                        <!-- VIDEO-MASKED HEADING (OPTION 2: SWIRLING INK) -->
+                        <span class="relative inline-block overflow-hidden align-bottom">
+                            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                                <source src="https://www.pexels.com/download/video/4162456/" type="video/mp4">
+                            </video>
+                            <span class="relative block text-black bg-white font-extrabold mix-blend-screen pointer-events-none">
+                                as the Best Assistants for Your Work
+                            </span>
+                        </span>
+                    </h1>
+                    <p class="mt-6 text-lg text-gray-500 leading-relaxed max-w-lg">
+                        The absolute best solution for those who want to establish a seamless collaboration with remote
+                        workers, efficiently and effectively.
+                    </p>
 
-                <!-- Trust Indicator -->
-                <div class="mt-12 flex items-center gap-4">
-                    <div class="flex -space-x-3">
-                        <img class="w-10 h-10 rounded-full border-2 border-white object-cover"
-                            src="https://images.unsplash.com/photo-1790273019525-db59dec855d6?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="User">
-                        <img class="w-10 h-10 rounded-full border-2 border-white object-cover"
-                            src="https://images.unsplash.com/photo-1727268531070-b9284f2379f9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDMxfHx8ZW58MHx8fHx8"
-                            alt="User">
-                        <img class="w-10 h-10 rounded-full border-2 border-white object-cover"
-                            src="https://images.unsplash.com/photo-1631377307475-9acfa929b062?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDI5fHx8ZW58MHx8fHx8"
-                            alt="User">
-                        <div
-                            class="w-10 h-10 rounded-full border-2 border-white bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">
-                            +1k</div>
+                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                        <a href="./auth.html"
+                            class="bg-indigo-600 text-white px-7 py-3.5 rounded-xl font-medium hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 flex items-center gap-2">
+                            Get Started
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                        <a href="#"
+                            class="text-gray-900 font-medium px-6 py-3.5 rounded-xl hover:bg-gray-50 transition-colors">
+                            See Pricing
+                        </a>
                     </div>
-                    <div>
-                        <div class="flex items-center text-yellow-400 text-sm">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
+
+                    <!-- Trust Indicator -->
+                    <div class="mt-12 flex items-center gap-4">
+                        <div class="flex -space-x-3">
+                            <img class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                                src="https://images.unsplash.com/photo-1790273019525-db59dec855d6?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0" alt="User">
+                            <img class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                                src="https://images.unsplash.com/photo-1727268531070-b9284f2379f9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0" alt="User">
+                            <img class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                                src="https://images.unsplash.com/photo-1631377307475-9acfa929b062?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0" alt="User">
+                            <div class="w-10 h-10 rounded-full border-2 border-white bg-indigo-50 flex items-center justify-center text-xs font-bold text-indigo-600">+1k</div>
                         </div>
-                        <p class="text-sm font-medium text-gray-600">5.0 from 1K+ reviews</p>
-                    </div>
-                </div>
-            </div>
-
-           <!-- Right Column Wrapper (No overflow-hidden so cards can hang outside) -->
-<div class="relative w-full h-[600px]">
-    
-    <!-- Inner Image & Cursors Container (Has overflow-hidden to keep rounded corners and clip cursors) -->
-    <div id="hero-image-container" class="absolute inset-0 overflow-hidden rounded-3xl shadow-2xl">
-        <!-- Main Image -->
-        <img src="https://images.unsplash.com/photo-1676119633019-be66d5c4bc4c?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Remote Worker" class="object-cover w-full h-full">
-
-        <!-- Ghost Cursors Layer -->
-        <div id="ghost-cursors-layer" class="absolute inset-0 pointer-events-none z-10"></div>
-    </div>
-
-    <!-- Floating Card 1: Task Finished (Moved OUTSIDE the hidden layer) -->
-    <div class="absolute top-16 left-4 md:left-8 bg-white/80 p-3 rounded-xl shadow-lg flex items-center gap-3 animate-float border border-gray-100 z-20">
-        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs">
-            <i class="fa-solid fa-check"></i>
-        </div>
-        <div>
-            <p class="text-sm font-bold text-gray-900 leading-tight">Task Finished</p>
-            <p class="text-xs text-gray-500">Just now</p>
-        </div>
-    </div>
-
-    <!-- Floating Card 2: Active Call (Hangs off the edge perfectly now) -->
-    <div class="absolute top-1/3 -right-6 md:-right-12 bg-white/80 p-3 rounded-xl shadow-lg flex items-center gap-3 animate-float-delayed border border-gray-100 z-20">
-        <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-xs">
-            <i class="fa-solid fa-microphone"></i>
-        </div>
-        <div>
-            <div class="flex items-center gap-1">
-                <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                <p class="text-sm font-bold text-gray-900 leading-tight">Active Call</p>
-            </div>
-            <p class="text-xs text-gray-500">00:24:15</p>
-        </div>
-    </div>
-
-    <!-- Floating Card 3: Profile -->
-    <div class="absolute bottom-10 right-4 md:right-10 bg-white/80 p-3 rounded-xl shadow-lg flex items-center gap-3 animate-float-slow border border-gray-100 z-20">
-        <img src="https://images.unsplash.com/photo-1733348137613-90f1af8674fd?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="mary" class="w-10 h-10 rounded-full object-cover">
-        <div>
-            <p class="text-sm font-bold text-gray-900 leading-tight">Mary Martins</p>
-            <p class="text-xs text-indigo-600 font-medium">Top Rated Virtual Asst.</p>
-        </div>
-    </div>
-
-</div>
-        </div>
-    </section>
-    <section class="bg-gray-50 py-24">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-            <span
-                class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-100/50 px-3 py-1 rounded-full">Target
-                Audience</span>
-            <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Who This Service Is For</h2>
-            <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">We provide specialized remote talent suited for
-                various industries and business models to help you scale rapidly.</p>
-
-            <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
-                <!-- Card 1 -->
-                <div
-                    class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Startups</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Scale your operations without the overhead. Hire
-                        dedicated remote staff to handle admin, support, and tech tasks.</p>
-                </div>
-
-                <!-- Card 2 -->
-                <div
-                    class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">E-commerce</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Manage your storefront, handle customer inquiries,
-                        and streamline order fulfillment with 24/7 remote assistance.</p>
-                </div>
-
-                <!-- Card 3 -->
-                <div
-                    class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Marketing Agencies</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Expand your creative output. Hire specialized
-                        copywriters, social media managers, and designers on demand.</p>
-                </div>
-
-                <!-- Card 4 -->
-                <div
-                    class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Tech Teams</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Augment your development capacity with vetted
-                        remote developers, QA testers, and product managers.</p>
-                </div>
-
-                <!-- Card 5 -->
-                <div
-                    class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Customer Support</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Build a scalable, multi-timezone support team to
-                        ensure your customers always receive timely assistance.</p>
-                </div>
-
-                <!-- Card 6 -->
-                <div
-                    class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Design Studios</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Collaborate with top-tier freelance UI/UX
-                        designers, illustrators, and graphic artists from around the globe.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-            <div class="max-w-xl">
-                <span class="flex items-center gap-2 text-indigo-600 font-bold text-sm tracking-wider uppercase mb-3">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    Why Choose Us
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Maximize Your Business Potential
-                    with the Best Remote Worker</h2>
-            </div>
-            <p class="text-gray-500 max-w-md md:text-right">Discover the concrete benefits that our curated network of
-                remote professionals brings to your daily operations.</p>
-        </div>
-
-        <div class="grid lg:grid-cols-12 gap-8">
-            <!-- Large Left Card: Cost Saving -->
-            <div
-                class="lg:col-span-7 bg-[#f8fafc] rounded-[2.5rem] p-10 flex flex-col justify-between border border-gray-100">
-
-                <!-- Custom CSS Graphic for Cost Saving -->
-                <div class="relative w-full h-80 flex items-center justify-center overflow-hidden mb-8">
-                    <!-- Dashed connection lines -->
-                    <svg class="absolute inset-0 w-full h-full text-indigo-200" viewBox="0 0 400 300"
-                        preserveAspectRatio="none">
-                        <path
-                            d="M50 50 L200 150 M350 50 L200 150 M50 250 L200 150 M350 250 L200 150 M200 20 L200 150 M200 280 L200 150"
-                            stroke="currentColor" stroke-width="2" stroke-dasharray="6 6" fill="none" />
-                    </svg>
-
-                    <!-- Surrounding Nodes -->
-                    <div
-                        class="absolute top-8 left-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                            </path>
-                        </svg>
-                    </div>
-                    <div
-                        class="absolute top-8 right-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <div
-                        class="absolute bottom-8 left-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
-                            </path>
-                        </svg>
-                    </div>
-                    <div
-                        class="absolute bottom-8 right-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <div
-                        class="absolute top-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <div
-                        class="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                            </path>
-                        </svg>
-                    </div>
-
-                    <!-- Central Node -->
-                    <div
-                        class="relative z-10 bg-white px-8 py-4 rounded-full shadow-lg border border-gray-100 flex items-center gap-4">
-                        <span class="text-gray-400 font-bold line-through text-xl">$8,000</span>
-                        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                        </svg>
-                        <span class="text-gray-900 font-bold text-3xl">$3,000</span>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Cost Saving</h3>
-                    <p class="text-gray-500 text-sm max-w-sm mx-auto">Reduce overhead costs up to 60% compared to local
-                        hiring without compromising on the quality of work.</p>
-                </div>
-            </div>
-
-            <!-- Right Column Stacked Cards -->
-            <div class="lg:col-span-5 flex flex-col gap-8  ">
-
-                <!-- Top Right Card: Quality -->
-                <div
-                    class="bg-[#f8fafc] rounded-[2.5rem] p-8 border border-gray-100 flex-1 flex flex-col justify-between">
-                    <div class="relative w-full h-40 mb-6 flex items-center justify-center">
-                        <!-- Abstract World Map Background (Dots) -->
-                        <div class="absolute inset-0 opacity-10"
-                            style="background-image: radial-gradient(#4f46e5 2px, transparent 2px); background-size: 16px 16px;">
-                        </div>
-
-                        <!-- Connecting Line Graphic -->
-                        <div class="relative z-10 flex items-center w-full max-w-[250px]">
-                            <div class="w-10 h-10 bg-white rounded-full shadow-md p-1 z-20"><img
-                                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
-                                    class="w-full h-full rounded-full object-cover"></div>
-                            <div class="h-0.5 flex-1 bg-indigo-200"></div>
-                            <div
-                                class="w-16 h-16 bg-indigo-600 rounded-2xl shadow-lg flex items-center justify-center z-20 text-white transform rotate-3">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
+                        <div>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                             </div>
-                            <div class="h-0.5 flex-1 bg-indigo-200"></div>
-                            <div class="w-10 h-10 bg-white rounded-full shadow-md p-1 z-20"><img
-                                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80"
-                                    class="w-full h-full rounded-full object-cover"></div>
+                            <p class="text-sm font-medium text-gray-600">5.0 from 1K+ reviews</p>
                         </div>
                     </div>
+                </div>
+
+                <!-- Right Column Wrapper -->
+                <div class="relative w-full h-[600px] overflow-hidden sm:overflow-visible">
+                    <div id="hero-image-container" class="absolute inset-0 overflow-hidden rounded-3xl shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1676119633019-be66d5c4bc4c?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0"
+                            alt="Remote Worker" class="object-cover w-full h-full">
+
+                        <!-- Ghost Cursors Layer -->
+                        <div id="ghost-cursors-layer" class="absolute inset-0 pointer-events-none z-10"></div>
+                    </div>
+
+                    <!-- Floating Card 1: Task Finished -->
+                    <div class="absolute top-16 left-2 sm:left-8 bg-white/80 p-3 rounded-xl shadow-lg flex items-center gap-3 animate-float border border-gray-100 z-20">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900 leading-tight">Task Finished</p>
+                            <p class="text-xs text-gray-500">Just now</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating Card 2: Active Call -->
+                    <div class="absolute top-1/3 right-1 sm:-right-6 md:-right-12 bg-white/80 p-3 rounded-xl shadow-lg flex items-center gap-3 animate-float-delayed border border-gray-100 z-20">
+                        <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 text-xs">
+                            <i class="fa-solid fa-microphone"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                <p class="text-sm font-bold text-gray-900 leading-tight">Active Call</p>
+                            </div>
+                            <p class="text-xs text-gray-500">00:24:15</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating Card 3: Profile -->
+                    <div class="absolute bottom-10 right-2 sm:right-10 bg-white/80 p-3 rounded-xl shadow-lg flex items-center gap-3 animate-float-slow border border-gray-100 z-20">
+                        <img src="https://images.unsplash.com/photo-1733348137613-90f1af8674fd?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0"
+                            alt="mary" class="w-10 h-10 rounded-full object-cover">
+                        <div>
+                            <p class="text-sm font-bold text-gray-900 leading-tight">Mary Martins</p>
+                            <p class="text-xs text-indigo-600 font-medium">Top Rated Virtual Asst.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Target Audience Section -->
+        <section class="bg-gray-50 py-24">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+                <span class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-100/50 px-3 py-1 rounded-full">Target Audience</span>
+                <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Who This Service Is For</h2>
+                <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">We provide specialized remote talent suited for various industries and business models to help you scale rapidly.</p>
+
+                <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Startups</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Scale your operations without the overhead. Hire dedicated remote staff to handle admin, support, and tech tasks.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">E-commerce</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Manage your storefront, handle customer inquiries, and streamline order fulfillment with 24/7 remote assistance.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Marketing Agencies</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Expand your creative output. Hire specialized copywriters, social media managers, and designers on demand.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Tech Teams</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Augment your development capacity with vetted remote developers, QA testers, and product managers.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Customer Support</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Build a scalable, multi-timezone support team to ensure your customers always receive timely assistance.</p>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Design Studios</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Collaborate with top-tier freelance UI/UX designers, illustrators, and graphic artists from around the globe.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="py-24 max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+                <div class="max-w-xl">
+                    <span class="flex items-center gap-2 text-indigo-600 font-bold text-sm tracking-wider uppercase mb-3">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Why Choose Us
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Maximize Your Business Potential with the Best Remote Worker</h2>
+                </div>
+                <p class="text-gray-500 max-w-md md:text-right">Discover the concrete benefits that our curated network of remote professionals brings to your daily operations.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Large Left Card: Cost Saving -->
+                <div class="lg:col-span-7 bg-[#f8fafc] rounded-[2.5rem] p-10 flex flex-col justify-between border border-gray-100">
+                    <div class="relative w-full h-80 flex items-center justify-center overflow-hidden mb-8">
+                        <svg class="absolute inset-0 w-full h-full text-indigo-200" viewBox="0 0 400 300" preserveAspectRatio="none">
+                            <path d="M50 50 L200 150 M350 50 L200 150 M50 250 L200 150 M350 250 L200 150 M200 20 L200 150 M200 280 L200 150" stroke="currentColor" stroke-width="2" stroke-dasharray="6 6" fill="none" />
+                        </svg>
+
+                        <div class="absolute top-8 left-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-8 right-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute bottom-8 left-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute bottom-8 right-12 w-12 h-12 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center text-indigo-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+
+                        <!-- Central Node -->
+                        <div class="relative z-10 bg-white px-8 py-4 rounded-full shadow-lg border border-gray-100 flex items-center gap-4">
+                            <span class="text-gray-400 font-bold line-through text-xl">$8,000</span>
+                            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                            <span class="text-gray-900 font-bold text-3xl">$3,000</span>
+                        </div>
+                    </div>
+
                     <div class="text-center">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">World-Class Quality</h3>
-                        <p class="text-gray-500 text-sm">Access top 1% global talent pool, rigorously vetted to ensure
-                            excellence for your projects.</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Cost Saving</h3>
+                        <p class="text-gray-500 text-sm max-w-sm mx-auto">Reduce overhead costs up to 60% compared to local hiring without compromising on the quality of work.</p>
                     </div>
                 </div>
 
-                <!-- Bottom Right Card: Flexible Hours -->
-
-                <div
-                    class="bg-white rounded-[2rem] p-8 border border-gray-200/60 shadow-sm hover:shadow-xl transition-all duration-500 group flex-1 flex flex-col justify-between">
-
-                    <!-- Mini UI Graphic: Scheduling Blocks -->
-                    <div class="bg-gray-50/80 p-4 rounded-2xl border border-gray-100 mb-6 space-y-3 z-10">
-                        <!-- Part Time -->
-                        <div class="flex items-center gap-3 opacity-60">
-                            <div class="w-2 h-2 rounded-full bg-gray-400"></div>
-                            <div
-                                class="flex-1 bg-white border border-gray-100 rounded-xl p-2.5 text-xs text-gray-500 font-medium flex justify-between items-center">
-                                <span>Part-Time</span> <span class="text-[10px] font-mono">20 HRS/WK</span>
+                <!-- Right Column Stacked Cards -->
+                <div class="lg:col-span-5 flex flex-col gap-8">
+                    <!-- Top Right Card: Quality -->
+                    <div class="bg-[#f8fafc] rounded-[2.5rem] p-8 border border-gray-100 flex-1 flex flex-col justify-between">
+                        <div class="relative w-full h-40 mb-6 flex items-center justify-center">
+                            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#4f46e5 2px, transparent 2px); background-size: 16px 16px;"></div>
+                            <div class="relative z-10 flex items-center w-full max-w-[250px]">
+                                <div class="w-10 h-10 bg-white rounded-full shadow-md p-1 z-20"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="w-full h-full rounded-full object-cover"></div>
+                                <div class="h-0.5 flex-1 bg-indigo-200"></div>
+                                <div class="w-16 h-16 bg-indigo-600 rounded-2xl shadow-lg flex items-center justify-center z-20 text-white transform rotate-3">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </div>
+                                <div class="h-0.5 flex-1 bg-indigo-200"></div>
+                                <div class="w-10 h-10 bg-white rounded-full shadow-md p-1 z-20"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" class="w-full h-full rounded-full object-cover"></div>
                             </div>
                         </div>
-                        <!-- Full Time (Active) -->
-                        <div
-                            class="flex items-center gap-3 transform translate-x-2 scale-[1.02] transition-transform shadow-sm">
-                            <div
-                                class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]">
-                            </div>
-                            <div
-                                class="flex-1 bg-indigo-600 border border-indigo-500 rounded-xl p-2.5 text-xs text-white font-medium flex justify-between items-center shadow-md">
-                                <span>Full-Time Dedicated</span> <span
-                                    class="text-[10px] font-mono bg-white/20 px-2 py-0.5 rounded">40 HRS/WK</span>
-                            </div>
-                        </div>
-                        <!-- Project Based -->
-                        <div class="flex items-center gap-3 opacity-60">
-                            <div class="w-2 h-2 rounded-full bg-gray-400"></div>
-                            <div
-                                class="flex-1 bg-white border border-gray-100 rounded-xl p-2.5 text-xs text-gray-500 font-medium flex justify-between items-center">
-                                <span>Project Based</span> <span class="text-[10px] font-mono">FLEXIBLE</span>
-                            </div>
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">World-Class Quality</h3>
+                            <p class="text-gray-500 text-sm">Access top 1% global talent pool, rigorously vetted to ensure excellence for your projects.</p>
                         </div>
                     </div>
 
-                    <div class="relative z-10">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Unmatched Flexibility</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">Scale your workforce up or down instantly. Hire
-                            for full-time, part-time, or highly specific time zones.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Process / How We Work Section -->
-    <section id="process-section" class="py-24 bg-white relative overflow-hidden">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-
-            <!-- Section Header -->
-            <div class="text-center mb-20">
-                <span
-                    class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-gray-500 uppercase px-3.5 py-1.5 rounded-full border border-gray-200 bg-gray-50/80 mb-4">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span> 004 • PROCESS
-                </span>
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4">How We Work</h2>
-                <p class="text-gray-500 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
-                    A proven process designed to transform your workflows into scalable remote team systems efficiently
-                    and strategically.
-                </p>
-            </div>
-
-            <!-- Timeline Grid Container -->
-            <div class="relative">
-
-                <!-- Central Vertical Track Line (Hidden on Mobile, Visible on MD+) -->
-                <div
-                    class="hidden md:block absolute left-1/2 top-6 bottom-6 -translate-x-1/2 w-0.5 bg-gray-100 rounded-full z-0">
-                    <!-- Dynamic Progress Line -->
-                    <div id="process-line-progress"
-                        class="w-full bg-gradient-to-b from-indigo-500 via-purple-500 to-indigo-600 h-0 rounded-full transition-all duration-100 ease-out">
-                    </div>
-                    <!-- Scroll Orb / Indicator -->
-                    <div id="process-scroll-orb"
-                        class="absolute -left-[7px] top-0 w-4 h-4 rounded-full bg-indigo-600 shadow-[0_0_12px_rgba(79,70,229,0.8)] border-2 border-white transition-transform duration-75">
-                    </div>
-                </div>
-
-                <!-- Steps Wrapper -->
-                <div class="space-y-4 md:space-y-6 relative z-10">
-
-                    <!-- STEP 01 -->
-                    <div
-                        class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
-                        <!-- Left Slot: Icon & Number -->
-                        <div class="flex items-center justify-start md:justify-end gap-4 order-1">
-                            <div
-                                class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center shadow-md flex-shrink-0">
-                                <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                    <!-- Bottom Right Card: Flexible Hours -->
+                    <div class="bg-white rounded-[2rem] p-8 border border-gray-200/60 shadow-sm hover:shadow-xl transition-all duration-500 group flex-1 flex flex-col justify-between">
+                        <div class="bg-gray-50/80 p-4 rounded-2xl border border-gray-100 mb-6 space-y-3 z-10">
+                            <div class="flex items-center gap-3 opacity-60">
+                                <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+                                <div class="flex-1 bg-white border border-gray-100 rounded-xl p-2.5 text-xs text-gray-500 font-medium flex justify-between items-center">
+                                    <span>Part-Time</span> <span class="text-[10px] font-mono">20 HRS/WK</span>
+                                </div>
                             </div>
-                            <span
-                                class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">01</span>
-                        </div>
-                        <!-- Center Timeline Node -->
-                        <div class="hidden md:flex items-center justify-center order-2">
-                            <div
-                                class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10">
+                            <div class="flex items-center gap-3 transform translate-x-2 scale-[1.02] transition-transform shadow-sm">
+                                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]"></div>
+                                <div class="flex-1 bg-indigo-600 border border-indigo-500 rounded-xl p-2.5 text-xs text-white font-medium flex justify-between items-center shadow-md">
+                                    <span>Full-Time Dedicated</span> <span class="text-[10px] font-mono bg-white/20 px-2 py-0.5 rounded">40 HRS/WK</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 opacity-60">
+                                <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+                                <div class="flex-1 bg-white border border-gray-100 rounded-xl p-2.5 text-xs text-gray-500 font-medium flex justify-between items-center">
+                                    <span>Project Based</span> <span class="text-[10px] font-mono">FLEXIBLE</span>
+                                </div>
                             </div>
                         </div>
-                        <!-- Right Slot: Text Content -->
-                        <div class="order-3">
-                            <h3 class="text-base font-bold text-gray-900">Discovery & Audit</h3>
-                            <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs leading-relaxed">
-                                We analyze your workflows, bottlenecks, and staffing revenue opportunities.
-                            </p>
-                        </div>
-                    </div>
 
-                    <!-- STEP 02 -->
-                    <div
-                        class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
-                        <!-- Left Slot: Text Content (Right Aligned on Desktop) -->
-                        <div class="order-3 md:order-1 text-left md:text-right">
-                            <h3 class="text-base font-bold text-gray-900">Talent Blueprint</h3>
-                            <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs md:ml-auto leading-relaxed">
-                                We design a detailed remote staffing architecture aligned directly with your KPIs.
-                            </p>
-                        </div>
-                        <!-- Center Timeline Node -->
-                        <div class="hidden md:flex items-center justify-center order-2">
-                            <div
-                                class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10">
-                            </div>
-                        </div>
-                        <!-- Right Slot: Icon & Number -->
-                        <div class="flex items-center justify-start gap-4 order-1 md:order-3">
-                            <span
-                                class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">02</span>
-                            <div
-                                class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0">
-                                <i class="fa-solid fa-shapes text-lg"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                   <!-- STEP 03 -->
-<div id="interactive-step-3" class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300 relative cursor-none group">
-    
-    <!-- Left Slot: Icon & Number -->
-    <div class="flex items-center justify-start md:justify-end gap-4 order-1 relative z-10">
-        <div class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors duration-300">
-            <i class="fa-solid fa-gear text-lg"></i>
-        </div>
-        <span class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">03</span>
-    </div>
-    
-    <!-- Center Timeline Node -->
-    <div class="hidden md:flex items-center justify-center order-2 relative z-10">
-        <div class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10"></div>
-    </div>
-    
-    <!-- Right Slot: Text Content -->
-    <div class="order-3 relative z-10">
-        <h3 class="text-base font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300">Vetted Matching</h3>
-        <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs leading-relaxed">
-            Our team matches top 1% assistants and integrates them with your existing toolset.
-        </p>
-    </div>
-
-    <!-- The Interactive Custom Cursor (Hidden by default, shown on hover) -->
-    <div id="custom-user-cursor" class="fixed top-0 left-0 pointer-events-none z-50 opacity-0 transition-opacity duration-200 flex flex-col items-start">
-        <svg viewBox="0 0 24 24" fill="#F97316" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-md transform -translate-x-[2px] -translate-y-[2px]">
-            <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 01.35-.15h6.42c.45 0 .67-.54.35-.85L6.35 3.35a.5.5 0 00-.85.35z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-        </svg>
-        <div class="bg-orange-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm ml-3 mt-0.5 whitespace-nowrap">
-           Remote
-        </div>
-    </div>
-
-</div>
-
-                    <!-- STEP 04 -->
-                    <div
-                        class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
-                        <!-- Left Slot: Text Content (Right Aligned on Desktop) -->
-                        <div class="order-3 md:order-1 text-left md:text-right">
-                            <h3 class="text-base font-bold text-gray-900">Trial & Refinement</h3>
-                            <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs md:ml-auto leading-relaxed">
-                                Performance testing, workflow validation, and quick operational refinement.
-                            </p>
-                        </div>
-                        <!-- Center Timeline Node -->
-                        <div class="hidden md:flex items-center justify-center order-2">
-                            <div
-                                class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10">
-                            </div>
-                        </div>
-                        <!-- Right Slot: Icon & Number -->
-                        <div class="flex items-center justify-start gap-4 order-1 md:order-3">
-                            <span
-                                class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">04</span>
-                            <div
-                                class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0">
-                                <i class="fa-solid fa-sliders text-lg"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- STEP 05 -->
-                    <div
-                        class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
-                        <!-- Left Slot: Icon & Number -->
-                        <div class="flex items-center justify-start md:justify-end gap-4 order-1">
-                            <div
-                                class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0">
-                                <i class="fa-solid fa-rocket text-lg"></i>
-                            </div>
-                            <span
-                                class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">05</span>
-                        </div>
-                        <!-- Center Timeline Node -->
-                        <div class="hidden md:flex items-center justify-center order-2">
-                            <div
-                                class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10">
-                            </div>
-                        </div>
-                        <!-- Right Slot: Text Content -->
-                        <div class="order-3">
-                            <h3 class="text-base font-bold text-gray-900">Deployment & Scaling</h3>
-                            <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs leading-relaxed">
-                                Launch, monitor progress, and continuously scale support for company growth.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-            <span
-                class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-100/50 px-3 py-1 rounded-full">Pricing</span>
-            <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Plans That Fit Your
-                Needs,<br>Pricing That's Fair</h2>
-            <p class="mt-4 text-gray-500 mb-12">No hidden fees, cancel anytime. Select the plan that matches your
-                current scale.</p>
-
-            <div class="grid md:grid-cols-2 gap-8 text-left">
-
-                <!-- Standard Plan -->
-                <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col">
-                    <div
-                        class="flex items-center gap-2 text-indigo-600 font-bold text-sm uppercase tracking-wider mb-4">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                        </svg>
-                        Standard Tier
-                    </div>
-                    <div class="flex items-baseline gap-1 mb-6">
-                        <span class="text-4xl font-extrabold text-gray-900">$1,000</span>
-                        <span class="text-gray-500 font-medium">/ month</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">Perfect for individuals and
-                        small startups needing part-time dedicated assistance.</p>
-
-                    <ul class="space-y-4 mb-8 flex-1">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm">Up to 80 hours per month</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm">Basic admin & data entry tasks</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm">Standard email & chat support</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm">Weekly reporting</span>
-                        </li>
-                    </ul>
-                    <a href="#"
-                        class="w-full block text-center py-3 px-4 bg-gray-50 hover:bg-gray-100 text-gray-900 font-bold rounded-xl transition-colors border border-gray-200">Select
-                        Plan</a>
-                </div>
-
-                <!-- Premium Plan -->
-                <div class="bg-white rounded-3xl p-8 border-2 border-indigo-600 shadow-xl relative flex flex-col">
-                    <div
-                        class="absolute top-0 right-8 transform -translate-y-1/2 bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">
-                        Most Popular</div>
-
-                    <div
-                        class="flex items-center gap-2 text-indigo-600 font-bold text-sm uppercase tracking-wider mb-4">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                        Professional Tier
-                    </div>
-                    <div class="flex items-baseline gap-1 mb-6">
-                        <span class="text-4xl font-extrabold text-gray-900">$2,000</span>
-                        <span class="text-gray-500 font-medium">/ month</span>
-                    </div>
-                    <p class="text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">Ideal for growing businesses
-                        needing full-time, specialized support professionals.</p>
-
-                    <ul class="space-y-4 mb-8 flex-1">
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-900 font-medium text-sm">Full-time (160 hours per month)</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm">Specialized skills (Design, Dev, Marketing)</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm">Priority matching & replacement</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span class="text-gray-600 text-sm">Dedicated Account Manager</span>
-                        </li>
-                    </ul>
-                    <a href="#"
-                        class="w-full block text-center py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-indigo-200">Get
-                        Started Now</a>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span
-                    class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-50 px-3 py-1 rounded-full">Testimonial</span>
-                <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">What People Say About Us
-                </h2>
-                <p class="mt-4 text-gray-500">Trusted by over 1,000 businesses worldwide.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 lg:gap-10 items-center">
-
-                <!-- Left Column Reviews -->
-                <div class="flex flex-col gap-6">
-                    <div
-                        class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
-                        <div class="flex text-yellow-400 mb-4">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        </div>
-                        <p class="text-sm text-gray-700 italic mb-6">"Since we started using Remote, our customer
-                            support response times have dropped by 50%. The remote worker we hired integrated perfectly
-                            with our existing team and tools."</p>
-                        <div class="flex items-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1772301685774-a4f0e81e032e?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                class="w-10 h-10 rounded-full object-cover">
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">Alex Carter</p>
-                                <p class="text-xs text-gray-500">CEO, TechFlow</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
-                        <div class="flex text-yellow-400 mb-4">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        </div>
-                        <p class="text-sm text-gray-700 italic mb-6">"The vetting process is incredible. I didn't have
-                            to sift through hundreds of resumes. Remote gave me two options, and both were spectacular."
-                        </p>
-                        <div class="flex items-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1731801613180-724b3808583e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDIyfHx8ZW58MHx8fHx8"
-                                class="w-10 h-10 rounded-full object-cover">
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">Emily Chen</p>
-                                <p class="text-xs text-gray-500">Founder, DesignCo</p>
-                            </div>
+                        <div class="relative z-10">
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Unmatched Flexibility</h3>
+                            <p class="text-gray-500 text-sm leading-relaxed">Scale your workforce up or down instantly. Hire for full-time, part-time, or highly specific time zones.</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Center Large Image -->
-                <div
-                    class="relative w-full h-[500px] rounded-3xl overflow-hidden shadow-xl transform md:-translate-y-4 opacity-95 hover:opacity-100 transition-opacity duration-300">
-                    <img src="https://images.unsplash.com/photo-1747741744139-663023d082bc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fHw%3D"
-                        class="w-full h-full object-cover">
+        <!-- Process / How We Work Section -->
+        <section id="process-section" class="py-24 bg-white relative overflow-hidden">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-20">
+                    <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest text-gray-500 uppercase px-3.5 py-1.5 rounded-full border border-gray-200 bg-gray-50/80 mb-4">
+                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-pulse"></span> 004 • PROCESS
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4">How We Work</h2>
+                    <p class="text-gray-500 max-w-lg mx-auto text-sm md:text-base leading-relaxed">A proven process designed to transform your workflows into scalable remote team systems efficiently and strategically.</p>
+                </div>
 
-                    <!-- Gradient Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent"></div>
+                <div class="relative">
+                    <div class="hidden md:block absolute left-1/2 top-6 bottom-6 -translate-x-1/2 w-0.5 bg-gray-100 rounded-full z-0">
+                        <div id="process-line-progress" class="w-full bg-gradient-to-b from-indigo-500 via-purple-500 to-indigo-600 h-0 rounded-full transition-all duration-100 ease-out"></div>
+                        <div id="process-scroll-orb" class="absolute -left-[7px] top-0 w-4 h-4 rounded-full bg-indigo-600 shadow-[0_0_12px_rgba(79,70,229,0.8)] border-2 border-white transition-transform duration-75"></div>
+                    </div>
 
-                    <!-- Play button overlay -->
-                    <div
-                        class="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors cursor-pointer group">
-                        <!-- Glass Outer Circle -->
-                        <div
-                            class="w-20 h-20 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                            <!-- Solid White Inner Circle -->
-                            <div
-                                class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-indigo-600 shadow-lg">
-                                <!-- Mathematically Centered Play Icon (x-min: 6.5, x-max: 17.5 -> Center: 12) -->
-                                <svg class="w-6 h-6 block" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M6.5 5v14l11-7z" />
+                    <div class="space-y-4 md:space-y-6 relative z-10">
+                        <!-- STEP 01 -->
+                        <div class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
+                            <div class="flex items-center justify-start md:justify-end gap-4 order-1">
+                                <div class="w-14 h-14 bg-gray-900 text-white rounded-2xl flex items-center justify-center shadow-md flex-shrink-0">
+                                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                                </div>
+                                <span class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">01</span>
+                            </div>
+                            <div class="hidden md:flex items-center justify-center order-2">
+                                <div class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10"></div>
+                            </div>
+                            <div class="order-3">
+                                <h3 class="text-base font-bold text-gray-900">Discovery & Audit</h3>
+                                <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs leading-relaxed">We analyze your workflows, bottlenecks, and staffing revenue opportunities.</p>
+                            </div>
+                        </div>
+
+                        <!-- STEP 02 -->
+                        <div class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
+                            <div class="order-3 md:order-1 text-left md:text-right">
+                                <h3 class="text-base font-bold text-gray-900">Talent Blueprint</h3>
+                                <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs md:ml-auto leading-relaxed">We design a detailed remote staffing architecture aligned directly with your KPIs.</p>
+                            </div>
+                            <div class="hidden md:flex items-center justify-center order-2">
+                                <div class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10"></div>
+                            </div>
+                            <div class="flex items-center justify-start gap-4 order-1 md:order-3">
+                                <span class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">02</span>
+                                <div class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                    <i class="fa-solid fa-shapes text-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 03 -->
+                        <div id="interactive-step-3" class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300 relative cursor-none group">
+                            <div class="flex items-center justify-start md:justify-end gap-4 order-1 relative z-10">
+                                <div class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors duration-300">
+                                    <i class="fa-solid fa-gear text-lg"></i>
+                                </div>
+                                <span class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">03</span>
+                            </div>
+                            <div class="hidden md:flex items-center justify-center order-2 relative z-10">
+                                <div class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10"></div>
+                            </div>
+                            <div class="order-3 relative z-10">
+                                <h3 class="text-base font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300">Vetted Matching</h3>
+                                <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs leading-relaxed">Our team matches top 1% assistants and integrates them with your existing toolset.</p>
+                            </div>
+
+                            <div id="custom-user-cursor" class="fixed top-0 left-0 pointer-events-none z-50 opacity-0 transition-opacity duration-200 flex flex-col items-start">
+                                <svg viewBox="0 0 24 24" fill="#F97316" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-md transform -translate-x-[2px] -translate-y-[2px]">
+                                    <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 01.35-.15h6.42c.45 0 .67-.54.35-.85L6.35 3.35a.5.5 0 00-.85.35z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
                                 </svg>
+                                <div class="bg-orange-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm ml-3 mt-0.5 whitespace-nowrap">Remote</div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 04 -->
+                        <div class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
+                            <div class="order-3 md:order-1 text-left md:text-right">
+                                <h3 class="text-base font-bold text-gray-900">Trial & Refinement</h3>
+                                <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs md:ml-auto leading-relaxed">Performance testing, workflow validation, and quick operational refinement.</p>
+                            </div>
+                            <div class="hidden md:flex items-center justify-center order-2">
+                                <div class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10"></div>
+                            </div>
+                            <div class="flex items-center justify-start gap-4 order-1 md:order-3">
+                                <span class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">04</span>
+                                <div class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                    <i class="fa-solid fa-sliders text-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 05 -->
+                        <div class="process-step grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8 p-4 md:p-6 rounded-3xl transition-all duration-300">
+                            <div class="flex items-center justify-start md:justify-end gap-4 order-1">
+                                <div class="w-14 h-14 bg-gray-100 border border-gray-200/80 text-gray-800 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0">
+                                    <i class="fa-solid fa-rocket text-lg"></i>
+                                </div>
+                                <span class="text-xs font-mono font-bold text-gray-400 bg-gray-100/80 px-2 py-1 rounded-md">05</span>
+                            </div>
+                            <div class="hidden md:flex items-center justify-center order-2">
+                                <div class="step-node w-3.5 h-3.5 rounded-full bg-white border-2 border-gray-300 transition-all duration-300 z-10"></div>
+                            </div>
+                            <div class="order-3">
+                                <h3 class="text-base font-bold text-gray-900">Deployment & Scaling</h3>
+                                <p class="text-xs md:text-sm text-gray-500 mt-1 max-w-xs leading-relaxed">Launch, monitor progress, and continuously scale support for company growth.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Right Column Reviews -->
-                <div class="flex flex-col gap-6">
-                    <div
-                        class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
-                        <div class="flex text-yellow-400 mb-4">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current text-gray-300" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        </div>
-                        <p class="text-sm text-gray-700 italic mb-6">"Saved us over $4,000 a month on administrative
-                            tasks. The platform is intuitive and tracking hours is transparent and straightforward."</p>
-                        <div class="flex items-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1723990720514-65968a7d517b?q=80&w=1379&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                class="w-10 h-10 rounded-full object-cover">
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">David Miller</p>
-                                <p class="text-xs text-gray-500">Director, StartUp Inc</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
-                        <div class="flex text-yellow-400 mb-4">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                        </div>
-                        <p class="text-sm text-gray-700 italic mb-6">"Highly recommend for anyone needing flexible
-                            support without the hassle of traditional hiring."</p>
-                        <div class="flex items-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1678483395289-67ccc3a3e8ab?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                class="w-10 h-10 rounded-full object-cover">
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">Mark Johnson</p>
-                                <p class="text-xs text-gray-500">Marketing Lead</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="py-24 max-w-5xl mx-auto px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <span
-                class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-50 px-3 py-1 rounded-full">Support
-                Forum</span>
-            <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Have Question?<br>We're Here to
-                Help</h2>
-        </div>
+        <!-- Pricing Section -->
+        <section class="py-24 bg-gray-50">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+                <span class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-100/50 px-3 py-1 rounded-full">Pricing</span>
+                <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Plans That Fit Your Needs,<br>Pricing That's Fair</h2>
+                <p class="mt-4 text-gray-500 mb-12">No hidden fees, cancel anytime. Select the plan that matches your current scale.</p>
 
-        <div class="grid md:grid-cols-2 gap-8 lg:gap-16 items-start">
-
-            <!-- Left Side: Active Answer -->
-            <div id="active-faq-container"
-                class="bg-indigo-50/50 border border-indigo-200 rounded-2xl p-8 shadow-sm transition-all duration-300">
-                <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                        </path>
-                    </svg>
-                </div>
-                <h3 id="active-faq-title" class="text-xl font-bold text-gray-900 mb-4">What is a Remote Worker?</h3>
-                <p id="active-faq-answer" class="text-gray-600 leading-relaxed text-sm">
-                    A remote worker is an experienced professional who works online to provide administrative,
-                    technical, or creative assistance to clients globally. They use collaborative tools to integrate
-                    seamlessly with your existing team, saving you the overhead costs of in-house staff while
-                    maintaining high productivity.
-                </p>
-            </div>
-
-            <!-- Right Side: Questions List -->
-            <div class="flex flex-col">
-                <button
-                    class="faq-btn text-left py-5 border-b border-gray-100 flex items-center justify-between group hover:text-indigo-600 transition-colors"
-                    data-id="0">
-                    <span class="font-medium text-gray-900 group-hover:text-indigo-600">How quickly can I hire a remote
-                        worker?</span>
-                    <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-                <button
-                    class="faq-btn text-left py-5 border-b border-gray-100 flex items-center justify-between group hover:text-indigo-600 transition-colors"
-                    data-id="1">
-                    <span class="font-medium text-gray-900 group-hover:text-indigo-600">Can I communicate with my worker
-                        directly?</span>
-                    <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-                <button
-                    class="faq-btn text-left py-5 border-b border-gray-100 flex items-center justify-between group hover:text-indigo-600 transition-colors"
-                    data-id="2">
-                    <span class="font-medium text-gray-900 group-hover:text-indigo-600">What if I'm not satisfied with
-                        the performance?</span>
-                    <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-                <button
-                    class="faq-btn text-left py-5 flex items-center justify-between group hover:text-indigo-600 transition-colors"
-                    data-id="3">
-                    <span class="font-medium text-gray-900 group-hover:text-indigo-600">Is there a minimum contract
-                        duration?</span>
-                    <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-900 text-white rounded-t-[3rem] pt-20 pb-10 px-8 md:px-16 mt-12 mx-4 md:mx-8 mb-0">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-16 mb-16">
-                <!-- Footer CTA -->
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-bold leading-tight mb-8 max-w-md">Budget-saving, high
-                        flexibility and effectiveness. Start getting them now.</h2>
-                    <a href="#"
-                        class="inline-block bg-white text-gray-900 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition-colors">
-                        Get Started →
-                    </a>
-                </div>
-
-                <!-- Footer Links -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-400 uppercase tracking-wider mb-4">Company</h4>
-                        <ul class="space-y-3">
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Jobs</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Press</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-400 uppercase tracking-wider mb-4">Product</h4>
-                        <ul class="space-y-3">
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Case Studies</a>
+                <div class="grid md:grid-cols-2 gap-8 text-left">
+                    <!-- Standard Plan -->
+                    <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm flex flex-col">
+                        <div class="flex items-center gap-2 text-indigo-600 font-bold text-sm uppercase tracking-wider mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            Standard Tier
+                        </div>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-4xl font-extrabold text-gray-900">$1,000</span>
+                            <span class="text-gray-500 font-medium">/ month</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">Perfect for individuals and small startups needing part-time dedicated assistance.</p>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-600 text-sm">Up to 80 hours per month</span>
                             </li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Reviews</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-gray-400 uppercase tracking-wider mb-4">Legal</h4>
-                        <ul class="space-y-3">
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Terms of
-                                    Service</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-600 text-sm">Basic admin & data entry tasks</span>
                             </li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Cookies</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Security</a></li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-600 text-sm">Standard email & chat support</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-600 text-sm">Weekly reporting</span>
+                            </li>
                         </ul>
+                        <a href="./auth.html" class="w-full block text-center py-3 px-4 bg-gray-50 hover:bg-gray-100 text-gray-900 font-bold rounded-xl transition-colors border border-gray-200">Select Plan</a>
+                    </div>
+
+                    <!-- Premium Plan -->
+                    <div class="bg-white rounded-3xl p-8 border-2 border-indigo-600 shadow-xl relative flex flex-col">
+                        <div class="absolute top-0 right-8 transform -translate-y-1/2 bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase">Most Popular</div>
+                        <div class="flex items-center gap-2 text-indigo-600 font-bold text-sm uppercase tracking-wider mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            Professional Tier
+                        </div>
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="text-4xl font-extrabold text-gray-900">$2,000</span>
+                            <span class="text-gray-500 font-medium">/ month</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-8 border-b border-gray-100 pb-6">Ideal for growing businesses needing full-time, specialized support professionals.</p>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-900 font-medium text-sm">Full-time (160 hours per month)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-600 text-sm">Specialized skills (Design, Dev, Marketing)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-600 text-sm">Priority matching & replacement</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="text-gray-600 text-sm">Dedicated Account Manager</span>
+                            </li>
+                        </ul>
+                        <a href="./auth.html" class="w-full block text-center py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-indigo-200">Get Started Now</a>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Bottom Divider & Copyright -->
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 bg-indigo-500 rounded flex items-center justify-center transform rotate-12">
-                        <svg class="w-3 h-3 text-white -rotate-12" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight">Remote</span>
+        <!-- Testimonials Section -->
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-50 px-3 py-1 rounded-full">Testimonial</span>
+                    <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">What People Say About Us</h2>
+                    <p class="mt-4 text-gray-500">Trusted by over 1,000 businesses worldwide.</p>
                 </div>
 
-                <p class="text-gray-500 text-sm">© 2026 Remote. All rights reserved.</p>
+                <div class="grid md:grid-cols-3 gap-6 lg:gap-10 items-center">
+                    <div class="flex flex-col gap-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
+                            <div class="flex text-yellow-400 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                            <p class="text-sm text-gray-700 italic mb-6">"Since we started using Remote, our customer support response times have dropped by 50%. The remote worker we hired integrated perfectly with our existing team and tools."</p>
+                            <div class="flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1772301685774-a4f0e81e032e?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0" class="w-10 h-10 rounded-full object-cover">
+                                <div><p class="text-sm font-bold text-gray-900">Alex Carter</p><p class="text-xs text-gray-500">CEO, TechFlow</p></div>
+                            </div>
+                        </div>
 
-                <div class="flex gap-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><svg class="w-5 h-5" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                        </svg></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><svg class="w-5 h-5" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                        </svg></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><svg class="w-5 h-5" fill="currentColor"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                        </svg></a>
+                        <div class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
+                            <div class="flex text-yellow-400 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                            <p class="text-sm text-gray-700 italic mb-6">"The vetting process is incredible. I didn't have to sift through hundreds of resumes. Remote gave me two options, and both were spectacular."</p>
+                            <div class="flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1731801613180-724b3808583e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0" class="w-10 h-10 rounded-full object-cover">
+                                <div><p class="text-sm font-bold text-gray-900">Emily Chen</p><p class="text-xs text-gray-500">Founder, DesignCo</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full h-[500px] rounded-3xl overflow-hidden shadow-xl transform md:-translate-y-4 opacity-95 hover:opacity-100 transition-opacity duration-300">
+                        <img src="https://images.unsplash.com/photo-1747741744139-663023d082bc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent"></div>
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-colors cursor-pointer group">
+                            <div class="w-20 h-20 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center text-indigo-600 shadow-lg">
+                                    <svg class="w-6 h-6 block" fill="currentColor" viewBox="0 0 24 24"><path d="M6.5 5v14l11-7z" /></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-6">
+                        <div class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
+                            <div class="flex text-yellow-400 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star text-gray-300"></i></div>
+                            <p class="text-sm text-gray-700 italic mb-6">"Saved us over $4,000 a month on administrative tasks. The platform is intuitive and tracking hours is transparent and straightforward."</p>
+                            <div class="flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1723990720514-65968a7d517b?q=80&w=1379&auto=format&fit=crop&ixlib=rb-4.1.0" class="w-10 h-10 rounded-full object-cover">
+                                <div><p class="text-sm font-bold text-gray-900">David Miller</p><p class="text-xs text-gray-500">Director, StartUp Inc</p></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-50">
+                            <div class="flex text-yellow-400 mb-4"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                            <p class="text-sm text-gray-700 italic mb-6">"Highly recommend for anyone needing flexible support without the hassle of traditional hiring."</p>
+                            <div class="flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1678483395289-67ccc3a3e8ab?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0" class="w-10 h-10 rounded-full object-cover">
+                                <div><p class="text-sm font-bold text-gray-900">Mark Johnson</p><p class="text-xs text-gray-500">Marketing Lead</p></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </section>
 
+        <!-- FAQ Section -->
+        <section class="py-24 max-w-5xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-indigo-600 font-bold text-sm tracking-wider uppercase bg-indigo-50 px-3 py-1 rounded-full">Support Forum</span>
+                <h2 class="mt-4 text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Have Question?<br>We're Here to Help</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 lg:gap-16 items-start">
+                <div id="active-faq-container" class="bg-indigo-50/50 border border-indigo-200 rounded-2xl p-8 shadow-sm transition-all duration-300">
+                    <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 id="active-faq-title" class="text-xl font-bold text-gray-900 mb-4">What is a Remote Worker?</h3>
+                    <p id="active-faq-answer" class="text-gray-600 leading-relaxed text-sm">
+                        A remote worker is an experienced professional who works online to provide administrative, technical, or creative assistance to clients globally. They use collaborative tools to integrate seamlessly with your existing team, saving you the overhead costs of in-house staff while maintaining high productivity.
+                    </p>
+                </div>
+
+                <div class="flex flex-col">
+                    <button class="faq-btn text-left py-5 border-b border-gray-100 flex items-center justify-between group hover:text-indigo-600 transition-colors" data-id="0">
+                        <span class="font-medium text-gray-900 group-hover:text-indigo-600">How quickly can I hire a remote worker?</span>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                    <button class="faq-btn text-left py-5 border-b border-gray-100 flex items-center justify-between group hover:text-indigo-600 transition-colors" data-id="1">
+                        <span class="font-medium text-gray-900 group-hover:text-indigo-600">Can I communicate with my worker directly?</span>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                    <button class="faq-btn text-left py-5 border-b border-gray-100 flex items-center justify-between group hover:text-indigo-600 transition-colors" data-id="2">
+                        <span class="font-medium text-gray-900 group-hover:text-indigo-600">What if I'm not satisfied with the performance?</span>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                    <button class="faq-btn text-left py-5 flex items-center justify-between group hover:text-indigo-600 transition-colors" data-id="3">
+                        <span class="font-medium text-gray-900 group-hover:text-indigo-600">Is there a minimum contract duration?</span>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-indigo-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white rounded-t-[3rem] pt-20 pb-10 px-8 md:px-16 mt-12 mx-4 md:mx-8 mb-0">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-16 mb-16">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold leading-tight mb-8 max-w-md">Budget-saving, high flexibility and effectiveness. Start getting them now.</h2>
+                        <a href="./auth.html" class="inline-block bg-white text-gray-900 font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition-colors">Get Started →</a>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
+                        <div>
+                            <h4 class="font-bold text-gray-400 uppercase tracking-wider mb-4">Company</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Jobs</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Press</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-400 uppercase tracking-wider mb-4">Product</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Case Studies</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Reviews</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-400 uppercase tracking-wider mb-4">Legal</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Cookies</a></li>
+                                <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Security</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 bg-indigo-500 rounded flex items-center justify-center transform rotate-12">
+                            <svg class="w-3 h-3 text-white -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <span class="font-bold text-xl tracking-tight">Remote</span>
+                    </div>
+
+                    <p class="text-gray-500 text-sm">© 2026 Remote. All rights reserved.</p>
+
+                    <div class="flex gap-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // FAQ Toggle Logic
         document.addEventListener('DOMContentLoaded', () => {
-            // FAQ Data mimicking database content
             const faqData = [
                 {
                     title: "How quickly can I hire a remote worker?",
@@ -1414,7 +950,6 @@
                     const id = this.getAttribute('data-id');
                     const data = faqData[id];
 
-                    // Subtle animation effect
                     activeContainer.style.opacity = '0';
                     activeContainer.style.transform = 'translateY(10px)';
 
@@ -1425,15 +960,11 @@
                         activeContainer.style.opacity = '1';
                         activeContainer.style.transform = 'translateY(0)';
                     }, 200);
-
-                    // Update button styling if needed (optional)
-                    // You could remove a class from all and add to the clicked one.
                 });
             });
         });
 
-
-        // Scroll-driven animation for the central timeline
+        // Timeline Scroll Progress Bar
         function updateTimelineScroll() {
             const section = document.getElementById('process-section');
             const progressLine = document.getElementById('process-line-progress');
@@ -1446,33 +977,27 @@
             const sectionHeight = rect.height;
             const windowHeight = window.innerHeight;
 
-            // Trigger calculation as section enters viewport
             const triggerOffset = windowHeight * 0.55;
             const scrollDistance = triggerOffset - rect.top;
 
-            // Compute percentage (0% to 100%)
             let progressPercentage = (scrollDistance / (sectionHeight - 100)) * 100;
             progressPercentage = Math.min(Math.max(progressPercentage, 0), 100);
 
-            // Fill progress line & move glowing orb down
             progressLine.style.height = `${progressPercentage}%`;
             orb.style.top = `${progressPercentage}%`;
 
-            // Highlight rows and node dots as the orb passes them
             steps.forEach((step) => {
                 const stepRect = step.getBoundingClientRect();
                 const stepCenter = stepRect.top + stepRect.height / 2;
                 const node = step.querySelector('.step-node');
 
                 if (stepCenter < triggerOffset + 50) {
-                    // Active Step Highlight
                     step.classList.add('bg-gray-100/80', 'shadow-sm');
                     if (node) {
                         node.classList.remove('bg-white', 'border-gray-300');
                         node.classList.add('bg-indigo-600', 'border-indigo-600', 'scale-125', 'ring-4', 'ring-indigo-100');
                     }
                 } else {
-                    // Reset Inactive Step
                     step.classList.remove('bg-gray-100/80', 'shadow-sm');
                     if (node) {
                         node.classList.add('bg-white', 'border-gray-300');
@@ -1482,127 +1007,98 @@
             });
         }
 
-        // Attach scroll listeners
         window.addEventListener('scroll', updateTimelineScroll);
         window.addEventListener('resize', updateTimelineScroll);
         window.addEventListener('DOMContentLoaded', updateTimelineScroll);
-    </script>
 
-    <script>
+        // 3D Text Flip Automation
         document.addEventListener("DOMContentLoaded", () => {
             const wrapper = document.getElementById('remote-text-3d');
+            if (!wrapper) return;
             let autoFlipInterval;
 
             function startAutoFlip() {
-                // Trigger the animation every 4.5 seconds
                 autoFlipInterval = setInterval(() => {
                     wrapper.classList.add('is-flipped');
-
-                    // Keep it flipped for 2 seconds, then reset
                     setTimeout(() => {
                         wrapper.classList.remove('is-flipped');
                     }, 2000);
-
                 }, 4500);
             }
 
-            // 1. Stop the auto-timer if the user hovers over it (CSS :hover takes over instantly)
             wrapper.addEventListener('mouseenter', () => {
                 clearInterval(autoFlipInterval);
                 wrapper.classList.remove('is-flipped');
             });
 
-            // 2. Restart the auto-timer when the mouse leaves
             wrapper.addEventListener('mouseleave', () => {
                 startAutoFlip();
             });
 
-            // 3. Start the loop on page load
             startAutoFlip();
         });
-    </script>
 
-    <script>
+        // Autonomous Ghost Cursors
         document.addEventListener("DOMContentLoaded", () => {
-            // --- GHOST CURSORS LOGIC ---
             const cursorLayer = document.getElementById('ghost-cursors-layer');
             if (!cursorLayer) return;
 
             const ghostUsers = [
-                { name: "Sarah", color: "#F97316" }, // Orange
-                { name: "David", color: "#3B82F6" }, // Blue
-                { name: "Alex", color: "#10B981" }   // Green
+                { name: "Sarah", color: "#F97316" },
+                { name: "David", color: "#3B82F6" },
+                { name: "Alex", color: "#10B981" }
             ];
 
             const cursors = [];
 
-            // Create the cursors in the DOM
             ghostUsers.forEach((user) => {
                 const cursorEl = document.createElement('div');
                 cursorEl.className = 'ghost-cursor';
-
-                // Start them off-screen or clustered in the center initially
                 cursorEl.style.left = '50%';
                 cursorEl.style.top = '50%';
 
-                // SVG Cursor Graphic
                 const svg = `
             <svg viewBox="0 0 24 24" fill="${user.color}" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 01.35-.15h6.42c.45 0 .67-.54.35-.85L6.35 3.35a.5.5 0 00-.85.35z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
             </svg>
         `;
-
-                // Name Label
                 const label = `<div class="ghost-cursor-label" style="background-color: ${user.color};">${user.name}</div>`;
 
                 cursorEl.innerHTML = svg + label;
                 cursorLayer.appendChild(cursorEl);
-
                 cursors.push(cursorEl);
             });
 
-            // Function to move them randomly across the image
             function animateCursors() {
                 cursors.forEach(cursorEl => {
-                    // Pick a random percentage between 5% and 85% to stay inside the image bounds
                     const randomX = 5 + Math.random() * 80;
                     const randomY = 5 + Math.random() * 80;
-
-                    // Apply new position
                     cursorEl.style.left = `${randomX}%`;
                     cursorEl.style.top = `${randomY}%`;
                 });
             }
 
-            // Start movement slightly after load to trigger CSS transition, then loop
             setTimeout(animateCursors, 100);
-            setInterval(animateCursors, 3000); // Moves every 3 seconds
+            setInterval(animateCursors, 3000);
         });
 
-        // --- INTERACTIVE USER CURSOR (STEP 03) ---
-const interactiveStep = document.getElementById('interactive-step-3');
-const customCursor = document.getElementById('custom-user-cursor');
+        // Step 3 Interactive Cursor
+        const interactiveStep = document.getElementById('interactive-step-3');
+        const customCursor = document.getElementById('custom-user-cursor');
 
-if (interactiveStep && customCursor) {
-    let bounds;
-    
-    // Show custom cursor and calculate bounds when mouse enters
-    interactiveStep.addEventListener('mouseenter', () => {
-        customCursor.style.opacity = '1';
-        bounds = interactiveStep.getBoundingClientRect();
-    });
+        if (interactiveStep && customCursor) {
+            interactiveStep.addEventListener('mouseenter', () => {
+                customCursor.style.opacity = '1';
+            });
 
-    // Hide custom cursor when mouse leaves
-    interactiveStep.addEventListener('mouseleave', () => {
-        customCursor.style.opacity = '0';
-    });
+            interactiveStep.addEventListener('mouseleave', () => {
+                customCursor.style.opacity = '0';
+            });
 
-    // Update cursor position to match mouse coordinates
-    interactiveStep.addEventListener('mousemove', (e) => {
-        // Use clientX/Y to position it fixed to the viewport seamlessly
-        customCursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    });
-}
+            interactiveStep.addEventListener('mousemove', (e) => {
+                customCursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            });
+        }
     </script>
 </body>
 
